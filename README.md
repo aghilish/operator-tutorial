@@ -1,8 +1,8 @@
 # operator-tutorial
 
 This is a sample operator built for learning purposes.
-[Tutorial Playbook](https://roozy-io.github.io/idp/tutorials/extending-k8s.html)
-[Killercoda Hands-on Lab](https://killercoda.com/aghilish/scenario/extending_k8s)
+- [Tutorial Playbook](https://roozy-io.github.io/idp/tutorials/extending-k8s.html)
+- [Killercoda Hands-on Lab](https://killercoda.com/aghilish/scenario/extending_k8s)
 
 ### Prerequisites
 - go version v1.21.0+
