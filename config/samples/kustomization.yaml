@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- blog_v1_ghost.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples

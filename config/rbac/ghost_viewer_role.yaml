@@ -1,0 +1,27 @@
+# permissions for end users to view ghosts.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: ghost-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: operator-tutorial
+    app.kubernetes.io/part-of: operator-tutorial
+    app.kubernetes.io/managed-by: kustomize
+  name: ghost-viewer-role
+rules:
+- apiGroups:
+  - blog.example.com
+  resources:
+  - ghosts
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - blog.example.com
+  resources:
+  - ghosts/status
+  verbs:
+  - get

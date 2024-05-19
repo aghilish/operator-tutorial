@@ -1,0 +1,7 @@
+apiVersion: blog.example.com/v1
+kind: Ghost
+metadata:
+  name: ghost-sample
+  namespace: marketing
+spec:
+  imageTag: alpine
