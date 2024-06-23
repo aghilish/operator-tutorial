@@ -27,6 +27,8 @@ import (
 type GhostSpec struct {
 	//+kubebuilder:validation:Pattern=`^[-a-z0-9]*$`
 	ImageTag string `json:"imageTag"`
+	//+kubebuilder:validation:Minimum=1
+	Replicas int32 `json:"replicas"`
 }
 
 // GhostStatus defines the observed state of Ghost

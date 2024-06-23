@@ -5,3 +5,4 @@ metadata:
   namespace: marketing
 spec:
   imageTag: alpine
+  replicas: 6

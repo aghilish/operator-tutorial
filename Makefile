@@ -201,3 +201,27 @@ GOBIN=$(LOCALBIN) go install $${package} ;\
 mv "$$(echo "$(1)" | sed "s/-$(3)$$//")" $(1) ;\
 }
 endef
+
+##@ Helm
+
+HELM_VERSION ?= v3.7.1
+
+.PHONY: helm
+helm: ## Download helm locally if necessary.
+ifeq (, $(shell which helm))
+        @{ \
+        set -e ;\
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash ;\
+        }
+endif
+
+.PHONY: install-cert-manager
+install-cert-manager: helm ## Install cert-manager using Helm.
+		helm repo add jetstack https://charts.jetstack.io
+		helm repo update
+		helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.15.0 --set crds.enabled=true
+
+.PHONY: uninstall-cert-manager
+uninstall-cert-manager: helm ## Uninstall cert-manager using Helm.
+		helm uninstall cert-manager --namespace cert-manager
+		kubectl delete namespace cert-manager

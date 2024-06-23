@@ -42,8 +42,13 @@ spec:
               imageTag:
                 pattern: ^[-a-z0-9]*$
                 type: string
+              replicas:
+                format: int32
+                minimum: 1
+                type: integer
             required:
             - imageTag
+            - replicas
             type: object
           status:
             description: GhostStatus defines the observed state of Ghost

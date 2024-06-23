@@ -53,6 +53,7 @@ const svcNamePrefix = "ghost-service-"
 //+kubebuilder:rbac:groups="",resources=persistentvolumeclaims,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups="",resources=services,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups="",resources=events,verbs=get;list;watch;create;update;patch
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -213,7 +214,8 @@ func (r *GhostReconciler) addOrUpdateDeployment(ctx context.Context, ghost *blog
 		desiredDeployment := generateDesiredDeployment(ghost)
 
 		// Compare relevant fields to determine if an update is needed
-		if existingDeployment.Spec.Template.Spec.Containers[0].Image != desiredDeployment.Spec.Template.Spec.Containers[0].Image {
+		if existingDeployment.Spec.Template.Spec.Containers[0].Image != desiredDeployment.Spec.Template.Spec.Containers[0].Image ||
+			*existingDeployment.Spec.Replicas != *desiredDeployment.Spec.Replicas {
 			// Fields have changed, update the deployment
 			existingDeployment.Spec = desiredDeployment.Spec
 			if err := r.Update(ctx, existingDeployment); err != nil {
@@ -241,7 +243,7 @@ func (r *GhostReconciler) addOrUpdateDeployment(ctx context.Context, ghost *blog
 }
 
 func generateDesiredDeployment(ghost *blogv1.Ghost) *appsv1.Deployment {
-	replicas := int32(1) // Adjust replica count as needed
+	replicas := ghost.Spec.Replicas
 	return &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
 			GenerateName: deploymentNamePrefix,

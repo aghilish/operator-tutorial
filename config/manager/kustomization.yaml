@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: c8n.io/aghilish/ghost-operator
-  newTag: latest
+  newTag: v2
